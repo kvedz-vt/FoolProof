@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Creators</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #121212;
+            --text-color: #ffffff;
+            --accent-color: #f4f4f4;
+            --highlight-color: #4169e1;
+            --font-sans: 'Arial', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            font-family: var(--font-sans);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            max-width: 1200px;
+            width: 100%;
+            gap: 20px;
+            padding-top: 20px;
+        }
+
+        .left {
+            flex: 1;
+            text-align: left;
+            word-wrap: break-word;
+            word-break: break-word;
+            max-width: calc(100% - 380px);
+            margin-top: -200px; /* Move the section up by 200px */
+        }
+
+        .left h1 {
+            font-size: 4.5rem;
+            margin: 0;
+            color: var(--accent-color);
+        }
+
+        .left p {
+            font-size: 1rem;
+            margin: 10px 0;
+            line-height: 1.4;
+            color: var(--text-color);
+        }
+
+        #fact-container {
+            font-size: 1rem;
+            font-weight: bold;
+            color: var(--highlight-color);
+        }
+
+        .right {
+            width: 300px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-top: 50px;
+            margin-left: -100px; /* Move the section 100px to the left */
+        }
+
+        .right h1 {
+            font-size: 4.5rem;
+            margin: 0;
+            color: var(--accent-color);
+            white-space: nowrap; /* Keep the title on one line */
+        }
+
+        .profiles {
+            display: flex;
+            gap: 60px; /* Space between Yovan and Kevin */
+            margin-top: 20px;
+            justify-content: center; /* Keep the profiles centered */
+            margin-left: 50px; /* Move the profiles 50px to the right */
+        }
+
+        .profile {
+            text-align: center;
+        }
+
+        .profile h2 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+            color: var(--accent-color);
+        }
+
+        .profile-icons {
+            display: flex;
+            gap: 10px; /* Space between icons */
+            justify-content: center;
+        }
+
+        .profile-icons a {
+            color: white;
+            font-size: 1.5rem;
+            text-decoration: none;
+        }
+
+        .profile-icons a:hover {
+            color: var(--highlight-color);
+        }
+
+        .vertical-text {
+            writing-mode: vertical-lr;
+            text-transform: uppercase;
+            font-size: 1rem;
+            color: var(--accent-color);
+            position: absolute;
+            left: 5%;
+            top: 10%;
+            letter-spacing: 3px;
+        }
+
+        .top-links {
+            position: absolute;
+            top: 20px;
+            justify-content: center;
+            display: flex;
+            gap: 15px;
+        }
+
+        .top-links a {
+            font-size: 0.9rem;
+            text-decoration: none;
+            color: var(--text-color);
+            text-transform: uppercase;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .top-links a:hover {
+            color: var(--highlight-color);
+        }
+
+        .top-right-logo {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .top-right-logo img {
+            width: 100px;
+            height: auto;
+        }
+
+        .bottom-left-image {
+            position: absolute;
+            bottom: 0px; /* Distance from the bottom of the screen */
+            left: 0px; /* Distance from the left of the screen */
+            width: 350px; /* Adjust the size of the image */
+            height: auto; /* Maintain aspect ratio */
+            z-index: 5; /* Layer the image properly */
+        }
+    </style>
+</head>
+<body>
+    <div class="vertical-text">ABOUT</div>
+
+    <div class="top-links">
+        <a href="/query">Statements</a>
+        <a href="/links">Links</a>
+        <a href="/about">About</a>
+    </div>
+
+    <div class="top-right-logo">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
+    </div>
+
+    <div class="container">
+        <!-- Left Section -->
+        <div class="left">
+            <h1>Our Mission</h1>
+            <p id="fact-container">We plan to combat the spread of fake news, recognizing its harmful impact on vulnerable groups such as the elderly, immigrants, and generally gullible 
+                individuals. Misleading information, like claims of an impending apocalypse or Canada becoming the 51st state, can cause unnecessary stress, disrupt focus at work, and sow 
+                confusion in daily life. Having immigrant parents ourselves, we’ve witnessed firsthand how easily misinformation can deceive and distress people we care about. 
+                This inspired us to create a tool designed to prevent such manipulation, empowering individuals to navigate the digital world with clarity and confidence.</p>
+        </div>
+
+        <!-- Right Section -->
+        <div class="right">
+            <h1>The Creators</h1>
+            <div class="profiles">
+                <!-- Yovan -->
+                <div class="profile">
+                    <h2>Yovan</h2>
+                    <div class="profile-icons">
+                        <a href="https://www.linkedin.com/in/yovan-arezina-43510133b/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://www.instagram.com/y0van_/" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://github.com/" target="_blank"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+
+                <!-- Divider -->
+                <div>|</div>
+
+                <!-- Kevin -->
+                <div class="profile">
+                    <h2>Kevin</h2>
+                    <div class="profile-icons">
+                        <a href="https://www.linkedin.com/in/kevinncaldwell/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://www.instagram.com/itzkevin.nguyen/" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://github.com/kvedz-vt" target="_blank"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Left Image -->
+    <img src="{{ url_for('static', filename='mag.png') }}" alt="Bottom Left Image" class="bottom-left-image">
+</body>
+</html>

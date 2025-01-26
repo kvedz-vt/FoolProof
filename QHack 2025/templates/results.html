@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fool Proof - Results</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --text-color: #ffffff;
+            --accent-color: #f4f4f4;
+            --highlight-color: #4169e1;
+            --font-sans: 'Arial', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            font-family: var(--font-sans);
+            background-color: #121212;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative; /* Enable positioning for the back symbol */
+            overflow: hidden;
+        }
+
+        .results-container {
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 480px;
+            width: 90%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        .results-container h2 {
+            font-size: 1.5rem;
+            color: var(--highlight-color);
+            margin-bottom: 1rem;
+        }
+
+        .results-container p {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .results-container ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .results-container ul li {
+            margin-bottom: 10px;
+        }
+
+        .results-container ul li a {
+            color: var(--highlight-color);
+            text-decoration: none;
+        }
+
+        .results-container ul li a:hover {
+            text-decoration: underline;
+        }
+
+        img {
+            margin: 20px auto;
+            max-width: 100px;
+            height: auto;
+        }
+
+        /* Back Symbol Styles */
+        .back-symbol {
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--highlight-color);
+            text-decoration: none;
+            cursor: pointer;
+            animation: bounce 1.5s infinite, flash 1.5s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes flash {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .back-symbol:hover {
+            color: var(--accent-color);
+        }
+    </style>
+</head>
+<body>
+    <a href="/query" class="back-symbol">&lt;</a> <!-- Big "<" symbol -->
+    <div class="results-container">
+        <h2>Results</h2>
+        {% if error %}
+            <p>{{ error }}</p>
+        {% else %}
+            <p><strong>Rating:</strong></p>
+
+            <!-- Conditional Display of Images Based on Updated Truthfulness Score -->
+            {% if truthfulness_score < 40 %}
+                <img src="{{ url_for('static', filename='low.png') }}" alt="Low Truthfulness (False)">
+            {% elif 40 <= truthfulness_score <= 55 %}
+                <img src="{{ url_for('static', filename='medium.png') }}" alt="Medium Truthfulness (Uncertain)">
+            {% elif truthfulness_score > 55 %}
+                <img src="{{ url_for('static', filename='high.png') }}" alt="High Truthfulness (True)">
+            {% endif %}
+
+            <p><strong>Analysis:</strong></p>
+            <p>{{ openai_analysis }}</p>
+            <h3>Similar Articles:</h3>
+            <ul>
+                {% for article in similar_articles %}
+                    <li><a href="{{ article.url }}" target="_blank">{{ article.name }}</a></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+</body>
+</html>
+
+

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fool Proof - Links</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --text-color: #ffffff;
+            --accent-color: #f4f4f4;
+            --highlight-color: #4169e1;
+            --font-sans: 'Arial', sans-serif;
+        }
+
+        body {
+            margin: 0;
+            font-family: var(--font-sans);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            max-width: 1200px;
+            width: 100%;
+            gap: 20px;
+        }
+
+        .left {
+            flex: 1;
+            text-align: left;
+            word-wrap: break-word;
+            word-break: break-word;
+            max-width: calc(100% - 380px);
+        }
+
+        .left h1 {
+            font-size: 6rem;
+            margin: 0;
+            color: var(--accent-color);
+        }
+
+        .left p {
+            font-size: 1.2rem;
+            margin: 20px 0;
+            line-height: 1.6;
+            color: var(--text-color);
+        }
+
+        #fact-container {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--highlight-color);
+            animation: typing 4s steps(40, end), blink 0.5s step-end infinite alternate;
+        }
+
+        @keyframes blink {
+            from {
+                border-right-color: transparent;
+            }
+            to {
+                border-right-color: var(--highlight-color);
+            }
+        }
+
+        .right {
+            width: 350px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .right form {
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 8px;
+            width: 100%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .right h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--highlight-color);
+            text-align: center;
+        }
+
+        .right textarea {
+            width: 95%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #333;
+            border-radius: 5px;
+            background: #2c2c2c;
+            color: #fff;
+            resize: none;
+            height: 100px;
+            font-size: 1rem;
+        }
+
+        .right button {
+            background: var(--highlight-color);
+            color: #000;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: background 0.3s ease;
+        }
+
+        .right button:hover {
+            background: var(--accent-color);
+        }
+
+        .vertical-text {
+            writing-mode: vertical-lr;
+            text-transform: uppercase;
+            font-size: 1rem;
+            color: var(--accent-color);
+            position: absolute;
+            left: 5%;
+            top: 10%;
+            letter-spacing: 3px;
+        }
+
+        .top-links {
+            position: absolute;
+            top: 20px;
+            justify-content: center;
+            display: flex;
+            gap: 15px;
+        }
+
+        .top-links a {
+            font-size: 0.9rem;
+            text-decoration: none;
+            color: var(--text-color);
+            text-transform: uppercase;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .top-links a:hover {
+            color: var(--highlight-color);
+        }
+
+        .top-right-logo {
+            position: absolute;
+            top: 20px; /* Adjust as needed */
+            right: 20px; /* Adjust as needed */
+            z-index: 1000; /* Ensure it stays on top */
+        }
+
+        .top-right-logo img {
+            width: 100px; /* Adjust size as needed */
+            height: auto; /* Maintain aspect ratio */
+            cursor: pointer; /* Optional: makes it clickable if needed */
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="vertical-text">Nothing is hidden</div>
+
+    <div class="top-links">
+        <a href="/query">Statements</a>
+        <a href="/links">Links</a>
+        <a href="/about">About</a>
+    </div>
+
+    <div class="top-right-logo">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
+    </div>
+
+    <div class="container">
+        <div class="left">
+            <h1>truth.</h1>
+            <p id="fact-container"></p>
+        </div>
+
+        <div class="right">
+            <form action="/link" method="post">
+                <h2>Verify a Link</h2>
+                <textarea name="url" placeholder="Enter the link here" required></textarea>
+                <button type="submit">Check</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        async function fetchFact() {
+            const response = await fetch('/facts'); // Fetch fact from backend
+            const data = await response.json();
+            return data.fact; // Return fetched fact
+        }
+
+        function displayFact(fact) {
+            const factContainer = document.getElementById('fact-container');
+            factContainer.textContent = ''; // Clear current fact
+            let i = 0;
+
+            function type() {
+                if (i < fact.length) {
+                    factContainer.textContent += fact[i];
+                    i++;
+                    setTimeout(type, 50); // Typing speed
+                }
+            }
+            type();
+        }
+
+        async function cycleFacts() {
+            while (true) {
+                const fact = await fetchFact(); // Fetch fact
+                displayFact(fact); // Display fact with typing effect
+                await new Promise(resolve => setTimeout(resolve, 15000)); // Wait 15 seconds
+            }
+        }
+
+        cycleFacts(); // Start fact cycle
+    </script>
+</body>
+</html>
