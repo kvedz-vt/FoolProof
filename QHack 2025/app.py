@@ -12,9 +12,8 @@ import random
 
 app = Flask(__name__)
 
-openai.api_key = "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"
-bing_api_key = "b8f06ca3fe274be19276df0ce95b7ff1"
-
+#openaikey
+#azure key
 
 vectorizer = TfidfVectorizer()
 
